@@ -1,0 +1,23 @@
+{
+    "name": "gl-session-server-client",
+    "version": "0.0.1",
+    "main": "session-client.js",
+    "dependencies": {
+        "moment": "2.14.1",
+        "gl-clients-error-codes": "0.0.1",
+        "gl-api-request-helper": "0.0.1"
+    },
+    "maintainers": [
+        {
+            "name": "and1gio",
+            "email": "g.maisuradze88@gmail.com"
+        },
+        {
+            "name": "levansuper",
+            "email": "l.basharuli@gmail.com"
+        }
+    ],
+    "author": {
+        "name": "Giorgi Maisuradze"
+    }
+}
