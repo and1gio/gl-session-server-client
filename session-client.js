@@ -1,3 +1,4 @@
+var moment = require('moment');
 var GLApi = require("gl-api-request-helper");
 var sessionManager = require("./session-manager");
 
@@ -60,7 +61,7 @@ var SessionClient = function (session) {
     SessionStore.prototype.set = function (sid, session, cb) {
         var me = this;
 
-        if(!sid){
+        if (!sid) {
             return cb(null, -1);
         }
 
@@ -72,10 +73,14 @@ var SessionClient = function (session) {
             data: {
                 sessionToken: sid,
                 userToken: session.userToken,
-                sessionActiveTime: session.sessionActiveTime,
                 sessionData: session
             }
         };
+
+        if (session.inactiveMinutesBeforeSessionDies) {
+            var expireAt = moment().add(session.inactiveMinutesBeforeSessionDies, 'm');
+            params.data.expireAt = expireAt.toDate();
+        }
 
         me.api.request("session/add-edit", params, function (err, res) {
             err ? cb(err, null) : cb(null, 'OK');

@@ -1,5 +1,4 @@
 var errorCodes = require('gl-clients-error-codes');
-var moment = require('moment');
 
 module.exports = function () {
 
@@ -17,10 +16,9 @@ module.exports = function () {
      */
     sessionManager.openSessionWithSessionActiveTime = function (req, userToken, sessionActiveMinutes, objectToSaveInSession, cb) {
         var me = this;
-        objectToSaveInSession.expireAt = moment().add(sessionActiveMinutes, 'm') ;
+        objectToSaveInSession.inactiveMinutesBeforeSessionDies = sessionActiveMinutes;
         me.openSession(req, userToken, objectToSaveInSession, cb);
     };
-
 
     sessionManager.openSession = function (req, userToken, objectToSaveInSession, cb) {
         req.session.regenerate(function (sessionRegenerateError) {
@@ -31,7 +29,7 @@ module.exports = function () {
             /*
              * fill session user object
              */
-            for(var i in objectToSaveInSession){
+            for (var i in objectToSaveInSession) {
                 req.session[i] = objectToSaveInSession[i];
             }
 
@@ -45,7 +43,7 @@ module.exports = function () {
                     return cb(errorCodes('ERROR_WHILE_SAVING_THE_SESSION', null), null);
                 }
 
-                req.session.reload(function(){
+                req.session.reload(function () {
                     cb(null, req.session);
                 });
             });

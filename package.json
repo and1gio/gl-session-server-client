@@ -1,10 +1,10 @@
 {
     "name": "gl-session-server-client",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "session-client.js",
     "dependencies": {
         "moment": "2.14.1",
-        "gl-clients-error-codes": "0.0.1",
+        "gl-clients-error-codes": "0.0.2",
         "gl-api-request-helper": "0.0.1"
     },
     "maintainers": [
