@@ -1,2 +1,2 @@
-# gl-session-server-client
-GL session server client
+# z-session-server-client
+Z session server client

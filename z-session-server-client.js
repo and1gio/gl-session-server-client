@@ -1,6 +1,6 @@
 var moment = require('moment');
-var GLApi = require("gl-api-request-helper");
-var sessionManager = require("./session-manager");
+var ZApiRequestHelper = require("z-api-request-helper");
+var ZSessionManager = require("./z-session-manager");
 
 /**
  * Return the `SessionStore` extending `express`'s session Store.
@@ -9,19 +9,19 @@ var sessionManager = require("./session-manager");
  * @return {Function}
  * @api public
  */
-var SessionClient = function (session) {
+var ZSessionServerClient = function (session) {
     var Store = session.Store;
 
     function SessionStore(config) {
         var me = this;
-        me.api = new GLApi(config);
+        me.api = new ZApiRequestHelper(config);
     }
 
     /**
      * Inherit from `Store`.
      */
     SessionStore.prototype.__proto__ = Store.prototype;
-    SessionClient.sessionManager = sessionManager();
+    SessionClient.sessionManager = ZSessionManager();
 
     /**
      * Attempt to fetch session by the given `sid`.
@@ -39,7 +39,7 @@ var SessionClient = function (session) {
             }
         };
 
-        me.api.request("session/get/by/session-token", params, function (err, res) {
+        me.api.post("session/get/by/session-token", params, function (err, res) {
             if (err) {
                 return fn(null, null);
             }
@@ -82,7 +82,7 @@ var SessionClient = function (session) {
             params.data.expireAt = expireAt.toDate();
         }
 
-        me.api.request("session/add-edit", params, function (err, res) {
+        me.api.post("session/add-edit", params, function (err, res) {
             err ? cb(err, null) : cb(null, 'OK');
         });
     };
@@ -102,7 +102,7 @@ var SessionClient = function (session) {
             }
         };
 
-        me.api.request("session/delete/by/session-token", params, function (err, res) {
+        me.api.post("session/delete/by/session-token", params, function (err, res) {
             err ? cb(err, null) : cb(null, 1);
         })
     };
@@ -123,4 +123,4 @@ var SessionClient = function (session) {
     return SessionStore;
 };
 
-module.exports = SessionClient;
+module.exports = ZSessionServerClient;

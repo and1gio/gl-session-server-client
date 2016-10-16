@@ -1,10 +1,8 @@
-var errorCodes = require('gl-clients-error-codes');
-
 module.exports = function () {
 
-    var sessionManager = {};
+    var zSessionManager = {};
 
-    sessionManager.getData = function (req) {
+    zSessionManager.getData = function (req) {
         if (!req || !req.session) {
             return null;
         }
@@ -14,16 +12,16 @@ module.exports = function () {
     /*
      * open session
      */
-    sessionManager.openSessionWithSessionActiveTime = function (req, userToken, sessionActiveMinutes, objectToSaveInSession, cb) {
+    zSessionManager.openSessionWithSessionActiveTime = function (req, userToken, sessionActiveMinutes, objectToSaveInSession, cb) {
         var me = this;
         objectToSaveInSession.inactiveMinutesBeforeSessionDies = sessionActiveMinutes;
         me.openSession(req, userToken, objectToSaveInSession, cb);
     };
 
-    sessionManager.openSession = function (req, userToken, objectToSaveInSession, cb) {
+    zSessionManager.openSession = function (req, userToken, objectToSaveInSession, cb) {
         req.session.regenerate(function (sessionRegenerateError) {
             if (sessionRegenerateError) {
-                return cb(errorCodes('ERROR_WHILE_REGENERATE_SESSION', null), null);
+                return cb([{keyword: 'ERROR_WHILE_REGENERATE_SESSION'}], null);
             }
 
             /*
@@ -40,7 +38,7 @@ module.exports = function () {
              */
             req.session.save(function (sessionSaveError) {
                 if (sessionSaveError) {
-                    return cb(errorCodes('ERROR_WHILE_SAVING_THE_SESSION', null), null);
+                    return cb([{keyword: 'ERROR_WHILE_SAVING_THE_SESSION'}], null);
                 }
 
                 req.session.reload(function () {
@@ -50,14 +48,14 @@ module.exports = function () {
         });
     };
 
-    sessionManager.closeSession = function (req, cb) {
+    zSessionManager.closeSession = function (req, cb) {
         req.session.destroy(function (sessionDestroyError) {
             if (sessionDestroyError) {
-                return cb(errorCodes('ERROR_WHILE_DESTROYING_THE_SESSION', null), null);
+                return cb([{keyword: 'ERROR_WHILE_DESTROYING_THE_SESSION'}], null);
             }
             cb(null, true);
         });
     };
 
-    return sessionManager;
+    return zSessionManager;
 };
