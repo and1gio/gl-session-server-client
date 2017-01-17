@@ -12,9 +12,9 @@ module.exports = function () {
     /*
      * open session
      */
-    zSessionManager.openSessionWithSessionActiveTime = function (req, userToken, sessionActiveMinutes, objectToSaveInSession, cb) {
+    zSessionManager.openSessionWithSessionActiveTime = function (req, userToken, inactiveMinutesBeforeSessionDies, objectToSaveInSession, cb) {
         var me = this;
-        objectToSaveInSession.inactiveMinutesBeforeSessionDies = sessionActiveMinutes;
+        objectToSaveInSession.inactiveMinutesBeforeSessionDies = inactiveMinutesBeforeSessionDies;
         me.openSession(req, userToken, objectToSaveInSession, cb);
     };
 
