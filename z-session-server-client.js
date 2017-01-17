@@ -76,10 +76,6 @@ var ZSessionServerClient = function (session) {
             }
         };
 
-        if (session.inactiveMinutesBeforeSessionDies) {
-            params.data.expireAt = expireAt.toDate();
-        }
-
         me.api.post("session/add-edit", params, function (err, res) {
             err ? cb(err, null) : cb(null, 'OK');
         });
