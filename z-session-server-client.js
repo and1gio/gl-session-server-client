@@ -1,4 +1,3 @@
-var moment = require('moment');
 var ZApiRequestHelper = require("z-api-request-helper");
 var ZSessionManager = require("./z-session-manager");
 
@@ -78,7 +77,6 @@ var ZSessionServerClient = function (session) {
         };
 
         if (session.inactiveMinutesBeforeSessionDies) {
-            var expireAt = moment().add(session.inactiveMinutesBeforeSessionDies, 'm');
             params.data.expireAt = expireAt.toDate();
         }
 
