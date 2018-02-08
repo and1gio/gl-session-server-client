@@ -1,6 +1,6 @@
 {
     "name": "z-session-server-client",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "author": {
         "name": "Giorgi Maisuradze"
     },
@@ -15,7 +15,7 @@
         }
     ],
     "dependencies": {
-        "z-api-request-helper": "0.0.5"
+        "z-api-request-helper": "0.0.6"
     },
     "main": "z-session-server-client.js"
 }
