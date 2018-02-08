@@ -20,7 +20,7 @@ var ZSessionServerClient = function (session) {
      * Inherit from `Store`.
      */
     SessionStore.prototype.__proto__ = Store.prototype;
-    ZSessionServerClient.sessionManager = ZSessionManager();
+    SessionStore.zSessionManager = ZSessionManager();
 
     /**
      * Attempt to fetch session by the given `sid`.
